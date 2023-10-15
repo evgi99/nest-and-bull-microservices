@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - dbdata:/data/db
+    restart: always
+
+  redis:
+    container_name: redis
+    image: "redis/redis-stack:latest"
+    ports:
+      - "6379:6379"
+
+  worker:
+    container_name: worker
+    image: node:latest
+    working_dir: /worker
+    volumes:
+      - ./worker:/worker
+    networks:
+      - nest-bull
+    command: npm run start:dev
+    env_file: 
+      - .env
+    depends_on:
+      - redis
+      - mongodb     
+
+  app-server:
+    container_name: app-server
+    image: node:latest
+    working_dir: /rest-app
+    ports:
+      - 3008:3008
+    volumes:
+      - ./rest-app:/rest-app
+    networks:
+      - nest-bull
+    command: npm run start:dev
+    env_file: 
+      - .env
+    depends_on:
+       - worker       
+
+volumes:
+  dbdata:
+
+networks:
+  nest-bull:
