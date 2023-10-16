@@ -28,13 +28,12 @@ $ docker-compose up -d
 ```bash
 $ docker ps 
 
-CONTAINER ID   IMAGE                     .....    PORTS                              NAMES
-c7412c97a170   node:latest               .....    0.0.0.0:3008->3008/tcp             app-server
-db5b0f2118c8   node:latest               .....                                       worker
-0cc8f62ffeaf   mongo                     .....    0.0.0.0:27017->27017/tcp           mongodb
-d3959f0debde   redis/redis-stack:latest  .....    0.0.0.0:6379->6379/tcp, 8001/tcp   redis
+CONTAINER ID   IMAGE                                   .....    PORTS                              NAMES
+c7412c97a170   nest-and-bull-microservices-app-server  .....    0.0.0.0:3008->3008/tcp             app-server
+db5b0f2118c8   nest-and-bull-microservices-worker      .....                                       worker
+0cc8f62ffeaf   mongo                                   .....    0.0.0.0:27017->27017/tcp           mongodb
+d3959f0debde   redis/redis-stack:latest                .....    0.0.0.0:6379->6379/tcp, 8001/tcp   redis
 ```
-
 
 
 ## Usage (Application Demo) 
