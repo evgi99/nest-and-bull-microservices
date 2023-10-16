@@ -18,10 +18,10 @@ services:
 
   worker:
     container_name: worker
-    image: node:latest
-    working_dir: /worker
+    build: ./worker
     volumes:
       - ./worker:/worker
+      - /worker/node_modules
     networks:
       - nest-bull
     command: npm run start:dev
@@ -29,16 +29,16 @@ services:
       - .env
     depends_on:
       - redis
-      - mongodb     
+      - mongodb 
 
   app-server:
     container_name: app-server
-    image: node:latest
-    working_dir: /rest-app
+    build: ./rest-app
     ports:
       - 3008:3008
     volumes:
       - ./rest-app:/rest-app
+      - /rest-app/node_modules
     networks:
       - nest-bull
     command: npm run start:dev
