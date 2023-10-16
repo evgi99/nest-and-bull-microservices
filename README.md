@@ -1,6 +1,8 @@
 # nest-and-bull-microservices
+A system that calculates the Nth prime number for each job and stores the results in a shared database. 
+
 includes 4 containers:
-- **app-server**: NestJS controller to create jobs, get job's status and cancel jobs.
+- **app-server**: NestJS controller to create jobs, get job's status, and cancel jobs.
 - **worker**: A Bull queue consumer in separate Micro-Service(NestJS) that processes the tasks.
 - **mongodb**: Shared database to store job details and results.
 - **redis**: Data store used by the Bull queue, serve producers and consumers.
@@ -22,7 +24,7 @@ $ cd nest-and-bull-microservices
 $ docker-compose up -d 
 ```
 
-4. Check everything is runing (list runing processes):
+4. Check everything is running (list running processes):
 ```bash
 $ docker ps 
 
@@ -37,7 +39,7 @@ d3959f0debde   redis/redis-stack:latest  .....    0.0.0.0:6379->6379/tcp, 8001/t
 
 ## Usage (Application Demo) 
 > **_NOTE:_** APIs could be tested with help of [Postman](https://www.postman.com/)
-### Add new job to the queue
+### Add a new job to the queue
 
 
 ```
@@ -53,7 +55,7 @@ RESPONSE: HTTP 201 (Created)
 ```
 
 ### Retrieve job status by id
-> **_NOTE:_**  In case jobStatus is 'completed' it return the input & the returnValue. otherwise, the response include only jobId & jobStatus.
+> **_NOTE:_**  In case of jobStatus is 'completed' it returns the input & the returnValue. otherwise, the response includes only jobId & jobStatus.
 ```
 GET http://localhost:3008/api/v1/jobs/82efd0ae-5549-4721-9c8f-a6b2cb803966
 
@@ -69,7 +71,7 @@ Response: HTTP 200
 ```
 
 ### Cancel job by id
-> **_NOTE:_**  It works only if the job is running (an active job) or waiting in the queue. Otherwise, the response is BadRequestException with informative message
+> **_NOTE:_**  It works only if the job is running (an active job) or waiting in the queue. Otherwise, the response is BadRequestException with an informative message
 
 ```
 DELETE http://localhost:3008/api/v1/jobs/b0ac6aba-1293-4eb6-bcec-a1349d0e0cdb
